@@ -1,0 +1,38 @@
+.model small
+data segment
+s db "apple"
+l dw 5
+rs db 10 dup(?)
+m1 db "palindrome $"
+m2 db "not palindrome $"
+data ends
+code segment
+assume cs: code, ds: data
+start: mov ax, data
+       mov ds, ax
+       mov cs, ax
+       mov cx, 1
+       lea si, s
+       lea di, rs
+       add di, cx
+       dec di
+b: mov al,[si]
+   mov [di], al
+   inc si
+   dec di
+   loop b
+   lea si, s
+   lea di, rs
+   mov cx, 1
+   repe cmpsb
+   jne np
+np: lea dx,m2
+    mov ah, 09h
+    int 21h
+d: mov ah, 4ch
+   int 21h
+   code ends
+   end start
+
+#output: Not palindrome
+    

@@ -1,0 +1,21 @@
+.model small
+data segment
+org 1000h
+n1 db 19h
+n2 db ?
+data ends
+code segment
+assume cs: code, ds: data
+start: mov ax, @ata
+       mov ds, ax
+       mov al, n1
+       mov bl, al
+       shr al, 01
+       xor al, bl
+       mov n2, al
+       mov ah, 4ch
+       int 21h 
+       code ends
+       end start
+
+#output: AX= 4C15

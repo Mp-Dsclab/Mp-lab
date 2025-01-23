@@ -1,0 +1,32 @@
+.model small
+data segment
+org 4000H
+num db 07
+org 5000h
+fibo db ?
+data ends
+code segment
+assume cs: code, ds:data
+main: mov ax, data
+      mov ds, ax
+      lea di, fibo
+      mov dl, 00h
+      mov[di], al
+      add di, 01h
+      daa
+      mov bl, 01h
+      mov[di], bl
+      up: add al, bl
+      daa
+      add di, 01h
+      mov[di], al
+      xchg al, bl
+      dec dl
+      jnz up
+      mov ah, 4ch
+      int 21h
+      code ends
+      end main
+
+#ouput: d 4000.....07
+        d 5000.....00 01 02 03 05 08

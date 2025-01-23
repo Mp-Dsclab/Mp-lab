@@ -1,0 +1,16 @@
+.model small
+code segment
+assume cs: code
+start: mov cx, 26
+mov dx, 65
+b:
+mov ah, 2
+int 21h
+inc dx
+loop b
+mov ah, 4ch
+int 21h
+code ends
+end start
+
+#output: ABCDEFGHIJKLMNOPQRSTUVWXYZ 

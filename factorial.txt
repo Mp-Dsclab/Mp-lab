@@ -1,0 +1,23 @@
+.model small
+data segment
+n dw 5
+data ends
+code segment
+assume cs: code, ds: data
+start: mov ax, data
+mov ds, ax
+mov ax, 0000h
+mov ax, n
+mov cx, n
+dec cx
+b: dec n
+mul n
+dec cx
+jnz b
+mov dx, ax
+mov ah, 4ch
+int 21h
+code ends
+end start
+
+#output: AX= 4C78

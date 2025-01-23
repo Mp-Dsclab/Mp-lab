@@ -1,0 +1,28 @@
+.model small
+data segment
+org 1000h
+list dw 30h,20h,10h
+count equ 03
+data ends
+code segment
+assume cs: code, ds: data
+start: mov ax, data
+       mov ds, ax
+       mov dx, count-1
+again 0: mov cx, dx
+         mov si, offset list
+again 1: mov ax, [si]
+         cmp ax, [si+2]
+         jl pr1
+         xchg [si+2], ax
+         xchg[si], ax
+pr1: add si, 02
+     loop again 1
+     dec dx
+     jnz again 0
+mov ah, 4ch
+int 21h
+code ends
+end start
+
+#output: 4C20
